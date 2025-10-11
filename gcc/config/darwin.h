@@ -523,6 +523,7 @@ extern GTY(()) int darwin_ms_struct;
    %{static|static-libgcc|static-libgcobol:%:replace-outfile(-lgcobol libgcobol.a%s)}\
    %{static|static-libgcc|static-libstdc++|static-libgfortran:%:replace-outfile(-lgomp libgomp.a%s)}\
    %{static|static-libgcc|static-libstdc++:%:replace-outfile(-lstdc++ libstdc++.a%s)}\
+   %{static|static-libga68:%:replace-outfile(-lga68 libga68.a%s)}\
    %{static|static-libgm2:%:replace-outfile(-lm2pim libm2pim.a%s)}\
    %{static|static-libgm2:%:replace-outfile(-lm2iso libm2iso.a%s)}\
    %{static|static-libgm2:%:replace-outfile(-lm2min libm2min.a%s)}\
