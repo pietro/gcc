@@ -57,6 +57,7 @@ through the macros defined in the @file{.h} file.
 * D Language and ABI::  Controlling D ABI changes.
 * Rust Language and ABI:: Controlling Rust ABI changes.
 * JIT Language and ABI:: JIT ABI parameters
+* ALGOL 68 Language and ABI:: Controlling ALGOL 68 ABI changes.
 * Named Address Spaces:: Adding support for named address spaces
 * Misc::                Everything else.
 @end menu
@@ -7316,6 +7317,14 @@ floating-point support; they are not included in this mechanism.
 @cindex parameters, jit abi
 
 @hook TARGET_JIT_REGISTER_CPU_TARGET_INFO
+
+@node ALGOL 68 Language and ABI
+@section ALGOL 68 ABI parameters
+@cindex parameters, ALGOL 68 abi
+
+@hook TARGET_ALGOL68_CPU_INFO
+
+@hook TARGET_ALGOL68_OS_INFO
 
 @node Named Address Spaces
 @section Adding support for named address spaces
