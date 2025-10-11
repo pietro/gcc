@@ -1934,6 +1934,9 @@ UrlSuffix(gcc/Overall-Options.html#index-specs)
 ;   duplicate: 'gcc/Darwin-Options.html#index-static-1'
 ;   duplicate: 'gcc/Link-Options.html#index-static'
 
+static-libga68
+LangUrlSuffix_Algol68(ga68/Linking-options.html#index-static-libga68)
+
 static-libgcc
 UrlSuffix(gcc/Link-Options.html#index-static-libgcc)
 
