@@ -1,0 +1,21 @@
+# { dg-options "-fstropping=upper" }  #
+# If-, case- and ucase-clauses.  #
+BEGIN FOR i
+      DO (i = 1 | 1 |: i = 2 | 2 |: i = 3 | 3 | eo if) OD;
+eo if:
+
+      FOR i
+      DO (i | 4, 5 |: i - 2 | 6, 7 | eo case) OD;
+eo case:
+
+      FOR i
+      DO ( (UNION (INT,REAL,CHAR,STRING,BOOL)
+            (i | 1, 1.0, "a", "", TRUE)
+           | (INT): 8, (REAL): 9
+           |: UNION (CHAR,STRING,BOOL) (i - 2 | "a", "", TRUE)
+           | (CHAR): 10, (STRING): 11
+           | eo ucase) )
+      OD;
+eo ucase:
+      SKIP
+END

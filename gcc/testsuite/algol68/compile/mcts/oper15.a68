@@ -1,0 +1,7 @@
+# { dg-options "-fstropping=upper" }  #
+
+# Incorrect, since not all declarers are of the mode row-of  #
+BEGIN UPB UNION ([]INT,BOOL) ([]INT (1)); # { dg-error "" }  #
+      LWB UNION (REF[,]STRING,STRING) ("ab"); # { dg-error "" }  #
+      SKIP
+END

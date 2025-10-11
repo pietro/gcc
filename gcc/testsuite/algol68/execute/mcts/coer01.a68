@@ -1,0 +1,4 @@
+# { dg-options "-fstropping=upper" }  #
+BEGIN ASSERT ((REAL x := 0; REF[]REAL (x) := 1; x) = 1.0);
+      ASSERT ((INT n := 0; n +:= 1 := 5) = 5)
+END

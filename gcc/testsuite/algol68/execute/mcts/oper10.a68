@@ -1,0 +1,87 @@
+# { dg-options "-fstropping=upper" }  #
+# Dyadic operators, non-bold monads #
+BEGIN # the first declaration is different to avoid a recursive loop #
+      INT decls := 0;
+      OP     += (INT a, b) INT: (INT c:= a; c PLUSAB b);
+      decls PLUSAB 1;
+      OP    +<= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    +>= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    +/= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    +== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    +*= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP   +:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  +<:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  +>:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  +/:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  +=:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  +*:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP   +=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  +<=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  +>=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  +/=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  +==:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  +*=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+
+      OP     -= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    -<= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    ->= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    -/= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    -== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    -*= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP   -:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  -<:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  ->:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  -/:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  -=:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  -*:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP   -=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  -<=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  ->=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  -/=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  -==:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  -*=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+
+      OP     %= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    %<= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    %>= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    %/= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    %== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP    %*= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP   %:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  %<:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  %>:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  %/:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  %=:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  %*:== (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP   %=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  %<=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  %>=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  %/=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  %==:= (INT a, b) INT: a + b; decls PLUSAB 1;
+      OP  %*=:= (INT a, b) INT: a + b; decls PLUSAB 1;
+
+      PRIO
+      +=1, +<=1, +>=1, +/=1, +==1, +*=1,
+      +:==1, +<:==1, +>:==1, +/:==1, +=:==1, +*:==1,
+      +=:=1, +<=:=1, +>=:=1, +/=:=1, +==:=1, +*=:=1,
+
+      -=1, -<=1, ->=1, -/=1, -==1, -*=1,
+      -:==1, -<:==1, ->:==1, -/:==1, -=:==1, -*:==1,
+      -=:=1, -<=:=1, ->=:=1, -/=:=1, -==:=1, -*=:=1,
+
+      %=1, %<=1, %>=1, %/=1, %==1, %*=1,
+      %:==1, %<:==1, %>:==1, %/:==1, %=:==1, %*:==1,
+      %=:=1, %<=:=1, %>=:=1, %/=:=1, %==:=1, %*=:=1;
+
+    ASSERT ((+ 1  +< 1  +> 1  +/ 1  += 1  +* 1
+    +:= 1  +<:= 1  +>:= 1  +/:= 1  +=:= 1  +*:= 1
+    +=: 1  +<=: 1  +>=: 1  +/=: 1  +==: 1  +*=: 1
+
+    - 1  -< 1  -> 1  -/ 1  -= 1  -* 1
+    -:= 1  -<:= 1  ->:= 1  -/:= 1  -=:= 1  -*:= 1
+    -=: 1  -<=: 1  ->=: 1  -/=: 1  -==: 1  -*=: 1
+
+    % 1  %< 1  %> 1  %/ 1  %= 1  %* 1
+    %:= 1  %<:= 1  %>:= 1  %/:= 1  %=:= 1  %*:= 1
+    %=: 1  %<=: 1  %>=: 1  %/=: 1  %==: 1  %*=: 1) EQ decls)
+END

@@ -1,0 +1,7 @@
+# { dg-options "-fstropping=upper" }  #
+# Application of a virtually useless mode.  #
+BEGIN puts ("Result should be ppp");
+      MODE P = PROC (P) P;
+      P p = (P p) P: (puts ("p"); p);
+      (p(p(p(p))))
+END

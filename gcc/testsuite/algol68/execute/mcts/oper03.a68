@@ -1,0 +1,12 @@
+# { dg-options "-fstropping=upper" }  #
+# Operator priorities.  #
+BEGIN PRIO + = 7;
+      ASSERT ((1+2*3) = 9);
+      BEGIN PRIO + = 6;
+            ASSERT ((1+2*3) = 7);
+            FOR i TO 1 WHILE PRIO + = 7; TRUE
+            DO ASSERT ((1+2*3) = 9); OD;
+            ASSERT ((1+2*3) = 7)
+      END;
+      ASSERT ((1+2*3) = 9)
+END

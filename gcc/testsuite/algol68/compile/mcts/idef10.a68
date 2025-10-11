@@ -1,0 +1,6 @@
+# { dg-options "-fstropping=upper" }  #
+
+BEGIN INT count := 0;
+      FOR i FROM 1 BY i DO count +:= 1 OD; # { dg-error "" }  #
+      ASSERT (count = 0)
+END

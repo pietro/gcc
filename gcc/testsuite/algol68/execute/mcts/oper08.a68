@@ -1,0 +1,18 @@
+# { dg-options "-fstropping=upper" }  #
+# A complicated formula relying totally on priorities.  #
+(
+  OP I= (INT i, j) COMPL : (i, j);
+  OP ** = (INT i, COMPL z) INT : ROUND(i + RE z + IM z);
+  OP <  = (INT i, j) INT : (i - j) * 2;
+  OP =  = (INT i, j) INT : (i + j) * 2;
+  OP AND= (INT i, j) INT : (i + i - j) * 3;
+  OP OR= (INT i, j) INT : (i - j - j) * 3;
+
+  INT loc int;
+  # Note: all operators are followed by their priorities #
+  ASSERT (((loc int := 0) -:= 1 OR 2 AND 3 = 4 < 5 + 6 * 7 ** 8 I 9
+          -:= 1 ** 8 OR 2 * 7 AND 3 + 6 = 4 < 5) EQ 10650)
+  # The implied parenthesis structure is :
+    (1(2(3(4(5(6(7(8(9)))))))))1((8)2((7)3((6)4(5))))
+    and it yields 10650 #
+)

@@ -1,0 +1,7 @@
+# { dg-options "-fstropping=upper" }  #
+# Identity relations.  #
+BEGIN REAL x; REF REAL y := x;
+      ASSERT ((x :=: y) AND (y :=: x));
+      ASSERT (x :=: REF[]REAL(x)[1]);
+      ASSERT (x :/=: REF[]REAL(x))
+END
