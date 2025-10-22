@@ -8,11 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/pietro/autoregen:main
-    steps:
-      - name: autoregen
-        uses: actions/checkout@v4
+    defaults:
+      run:
         shell: bash
-        run: |
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
           # https://github.com/actions/checkout/issues/766
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           ./contrib/autoregen.py
