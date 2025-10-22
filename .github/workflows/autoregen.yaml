@@ -9,7 +9,7 @@ jobs:
     container:
       image: ghcr.io/pietro/autoregen:main
     steps:
-      - Name: autoregen
+      - name: autoregen
         uses: actions/checkout@v4
         shell: bash
         run: |
