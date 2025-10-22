@@ -8,9 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/pietro/autoregen:main
-    defaults:
-      run:
-        shell: bash
     steps:
       - uses: actions/checkout@v4
       - run: |
