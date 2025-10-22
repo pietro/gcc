@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           ./contrib/autoregen.py
+          pwd
           CHANGED=$(git diff --name-only)
           if [ test -n "${CHANGED}" ]; then
           echo "The following files were regenerated:"
