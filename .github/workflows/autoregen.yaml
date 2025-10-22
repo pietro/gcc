@@ -1,0 +1,20 @@
+---
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  autoregen:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/pietro/autoregen:main
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          ./contrib/autoregen.py
+          CHANGED=$(git diff --name-only)
+          if [ test -n "${CHANGED}" ]; then
+          echo "The following files were regenerated:"
+          echo "${CHANGED}"
+          exit 1
+          fi
