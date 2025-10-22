@@ -20,7 +20,7 @@ jobs:
           pwd
           ls -la
           CHANGED=$(git diff --name-only)
-          if [ test -n "${CHANGED}" ]; then
+          if [ -n "${CHANGED}" ]; then
           echo "The following files were regenerated:"
           echo "${CHANGED}"
           exit 1
