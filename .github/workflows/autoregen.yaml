@@ -13,6 +13,7 @@ jobs:
       - run: |
           ./contrib/autoregen.py
           pwd
+          ls -la
           CHANGED=$(git diff --name-only)
           if [ test -n "${CHANGED}" ]; then
           echo "The following files were regenerated:"
