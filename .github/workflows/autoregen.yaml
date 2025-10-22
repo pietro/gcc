@@ -17,11 +17,11 @@ jobs:
           # https://github.com/actions/checkout/issues/766
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           ./contrib/autoregen.py
-          pwd
-          ls -la
           CHANGED=$(git diff --name-only)
           if [ -n "${CHANGED}" ]; then
-          echo "The following files were regenerated:"
+          echo "The following files changed:"
           echo "${CHANGED}"
           exit 1
+          else
+          echo "Files regenerated correctly and no differences found."
           fi
