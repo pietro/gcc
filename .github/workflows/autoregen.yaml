@@ -9,8 +9,10 @@ jobs:
     container:
       image: ghcr.io/pietro/autoregen:main
     steps:
-      - uses: actions/checkout@v4
-      - run: |
+      - Name: autoregen
+        uses: actions/checkout@v4
+        shell: bash
+        run: |
           # https://github.com/actions/checkout/issues/766
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           ./contrib/autoregen.py
