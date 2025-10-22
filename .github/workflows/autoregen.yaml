@@ -11,6 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
+          # https://github.com/actions/checkout/issues/766
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
           ./contrib/autoregen.py
           pwd
           ls -la
