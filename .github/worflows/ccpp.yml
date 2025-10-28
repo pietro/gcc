@@ -9,6 +9,7 @@ on:
       - a68
       - releases/gcc-15-a68
   pull_request:
+    types: [opened, synchronize, reopened]
 
 env:
   LC_ALL: C.UTF-8
