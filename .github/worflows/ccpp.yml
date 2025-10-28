@@ -1,0 +1,200 @@
+---
+name: GCC Algol68 Build and Test
+
+# based on https://github.com/Rust-GCC/gccrs/blob/master/.github/workflows/ccpp.yml
+
+on:
+  push:
+    branches:
+      - a68
+      - releases/gcc-15-a68
+  pull_request:
+
+env:
+  LC_ALL: C.UTF-8
+
+jobs:
+  build-and-check-ubuntu-64bit:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Deps
+      run: |
+          sudo apt-get update;
+          sudo apt-get install --no-install-recommends -y \
+                  bison \
+                  dejagnu \
+                  flex \
+                  g++-multilib \
+                  gcc-multilib \
+                  libgmp3-dev \
+                  libisl-dev \
+                  libmpc-dev \
+                  libmpfr-dev \
+                  libtool \
+                  make
+
+    - name: Configure
+      run: |
+           mkdir -p gcca68-build;
+           cd gcca68-build;
+           ../configure \
+               --enable-languages=algol68 \
+               --disable-bootstrap \
+               --enable-multilib
+
+    - name: Build
+      run: |
+           cd gcca68-build; \
+           make -j -Otarget $(nproc)
+
+    - name: Run Tests
+      run: |
+           cd gcca68-build; \
+           make -j $(nproc) check-algol68 RUNTESTFLAGS="--target_board=unix\{-m64}"
+
+    - name: Archive check-algol68 results
+      uses: actions/upload-artifact@v4
+      with:
+        name: check-algol68-logs-ubuntu-64
+        path: |
+          gcca68-build/gcc/testsuite/algol68/
+
+    - name: Check regressions
+      run: |
+           cd gcca68-build; \
+           if grep -e "unexpected" -e "unresolved" -e "ERROR:" gcc/testsuite/algol68/algol68.sum;\
+           then \
+              echo "::error title=Regression test failed::some tests are not correct"; \
+              perl -n ../.github/emit_test_errors.pl < gcc/testsuite/algol68/algol68.sum; \
+              exit 1; \
+            else \
+              exit 0; \
+            fi
+
+  build-and-check-ubuntu-32bit:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Deps
+      run: |
+          sudo apt-get update;
+          sudo apt-get install --no-install-recommends -y \
+                  bison \
+                  dejagnu \
+                  flex \
+                  g++-multilib \
+                  gcc-multilib \
+                  libgmp3-dev \
+                  libisl-dev \
+                  libmpc-dev \
+                  libmpfr-dev \
+                  libtool \
+                  make
+
+    - name: Configure
+      run: |
+           mkdir -p gcca68-build;
+           cd gcca68-build;
+           ../configure \
+               --enable-languages=algol68 \
+               --disable-bootstrap \
+               --enable-multilib
+
+    - name: Build
+      shell: bash
+      run: |
+           cd gcca68-build; \
+           make -Otarget -j $(nproc)
+
+    - name: Run Tests
+      run: |
+           cd gcca68-build; \
+           make check-algol68 RUNTESTFLAGS="--target_board=unix\{-m32}"
+
+    - name: Archive check-algol68 results
+      uses: actions/upload-artifact@v4
+      with:
+        name: check-algol68-logs-ubuntu-32
+        path: |
+          gcca68-build/gcc/testsuite/algol68/
+
+    - name: Check regressions
+      run: |
+           cd gcca68-build; \
+           if grep -e "unexpected" -e "unresolved" -e "ERROR:" gcc/testsuite/algol68/algol68.sum;\
+           then \
+              echo "::error title=Regression test failed::some tests are not correct"; \
+              perl -n ../.github/emit_test_errors.pl < gcc/testsuite/algol68/algol68.sum; \
+              exit 1; \
+            else \
+              exit 0; \
+            fi
+
+  build-and-check-clang-macos-intel:
+
+    env:
+      # Force CC/CXX to be explicitly clang to make it clear which compiler is used
+      CC: clang
+      CXX: clang++
+
+    runs-on: macos-15-intel
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install Deps
+      run: |
+          brew install dejagnu gmp isl libmpc make mpfr
+
+    - name: Configure
+      run: |
+           mkdir -p gcca68-build;
+           cd gcca68-build;
+           ../configure \
+               --enable-languages=algol68 \
+               --disable-bootstrap \
+               --enable-multilib \
+               --with-gmp="$(brew --prefix gmp)" \
+               --with-mpfr="$(brew --prefix mpfr)" \
+               --with-isl="$(brew --prefix isl)" \
+               --with-mpc="$(brew --prefix libmpc)" \
+               --with-native-system-header-dir=/usr/include \
+               --with-sysroot=$(xcrun --show-sdk-path) \
+               --with-system-zlib
+
+    - name: Build
+      run: |
+           cd gcca68-build; \
+           gmake -Otarget -j $(sysctl -n hw.ncpu)
+
+    - name: Run Tests
+      run: |
+           cd gcca68-build; \
+           gmake -j $(sysctl -n hw.ncpu) check-algol68
+
+    - name: Archive check-algol68 results
+      uses: actions/upload-artifact@v4
+      with:
+        name: check-algol68-logs-macos-intel
+        path: |
+          gcca68-build/gcc/testsuite/algol68/
+
+    - name: Check regressions
+      run: |
+           cd gcca68-build; \
+           if grep -e "unexpected" -e "unresolved" -e "ERROR:" gcc/testsuite/algol68/algol68.sum;\
+           then \
+              echo "::error title=Regression test failed::some tests are not correct"; \
+              exit 1; \
+            else \
+              exit 0; \
+            fi
