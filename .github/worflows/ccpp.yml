@@ -1,7 +1,5 @@
 ---
-name: GCC Algol68 Build and Test
-
-# based on https://github.com/Rust-GCC/gccrs/blob/master/.github/workflows/ccpp.yml
+name: C/C++ CI
 
 on:
   push:
@@ -10,63 +8,15 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build-and-check-ubuntu-64bit:
+  build:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Install Deps
-      run: |
-          sudo apt-get update;
-          sudo apt-get install --no-install-recommends -y \
-                  bison \
-                  dejagnu \
-                  flex \
-                  g++-multilib \
-                  gcc-multilib \
-                  libgmp3-dev \
-                  libisl-dev \
-                  libmpc-dev \
-                  libmpfr-dev \
-                  libtool \
-                  make
-
-    - name: Configure
-      run: |
-           mkdir -p gcca68-build;
-           cd gcca68-build;
-           ../configure \
-               --enable-languages=algol68 \
-               --disable-bootstrap \
-               --enable-multilib
-
-    - name: Build
-      run: |
-           cd gcca68-build;
-           make -j -Otarget $(nproc)
-
-    - name: Run Tests
-      run: |
-           cd gcca68-build;
-           make -j $(nproc) check-algol68 RUNTESTFLAGS="--target_board=unix\{-m64}"
-
-    - name: Archive check-algol68 results
-      uses: actions/upload-artifact@v4
-      with:
-        name: check-algol68-logs-ubuntu-64
-        path: |
-          gcca68-build/gcc/testsuite/algol68/
-
-    - name: Check regressions
-      run: |
-           cd gcca68-build; \
-           if grep -e "unexpected" -e "unresolved" -e "ERROR:" gcc/testsuite/algol68/algol68.sum;\
-           then \
-              echo "::error title=Regression test failed::some tests are not correct"; \
-              perl -n ../.github/emit_test_errors.pl < gcc/testsuite/algol68/algol68.sum; \
-              exit 1; \
-            else \
-              exit 0; \
-            fi
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make
+    - name: make check
+      run: make check
