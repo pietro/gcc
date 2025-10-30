@@ -56,10 +56,10 @@ Debugging
 
 A few front-end specific options useful for debugging are:
 
-  '-fdump-algol68-tree'
+  '-fa68-dump-ast'
   Emits a textual representation of the parse tree as produced by the parser.
 
-  '-fdump-algol68-modes'
+  '-fa68-dump-modes'
   Emits a list of all parsed modes.
 
 See the Developer Options section in the GNU Algol Compiler manual for
