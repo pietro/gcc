@@ -1,0 +1,8 @@
+# { dg-options "-fstropping=upper" }  #
+
+# Mode equivalencing.  #
+BEGIN MODE N = UNION (BYTES, BITS, REF BITS); # { dg-error "" }  #
+      MODE SZEREDI = UNION (INT,REAL,REF UNION (INT, REAL)); # { dg-error "" }  #
+      # Szeredi - ambiguity.  #
+      SKIP
+END

@@ -1,0 +1,5 @@
+# { dg-options "-fstropping=upper" }  #
+BEGIN INT i := 1, j := 2;
+      i := j := (GOTO l; 3);
+l:    ASSERT (i = 1 AND j = 2)
+END

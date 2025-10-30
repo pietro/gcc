@@ -1,0 +1,11 @@
+# { dg-options "-fstropping=upper" }  #
+# Test vaccum as string.  #
+BEGIN PROC p = (STRING s) VOID:
+      BEGIN ASSERT (LWB s = 1);
+            ASSERT (UPB s = 0)
+      END;
+
+      p ("");
+      p (());
+      p (BEGIN END)
+END

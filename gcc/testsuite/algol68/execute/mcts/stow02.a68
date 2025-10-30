@@ -1,0 +1,15 @@
+# { dg-options "-fstropping=upper" }  #
+# Some slices #
+BEGIN [0:7][0:15] INT a;
+      INT n:= 0;
+
+      FOR i TO 8 DO FOR j TO 16 DO a[i-1][j-1]:= n+:=1OD OD;
+      ASSERT (a[0][15] = 16);
+      ASSERT (a[0:0 AT 0][0][15] = 16);
+      ASSERT (a[0:0 AT 0][0:0 AT 0][0][3:15][11:13 AT 2][4] = 16);
+CO XXX run-time error
+      []INT k = a[0:0][15] # wrong, a[0:0] has bounds [1:1][0:15],
+                             so there occurs overflow #;
+CO
+      SKIP
+END

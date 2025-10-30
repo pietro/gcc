@@ -1,0 +1,7 @@
+# { dg-options "-fstropping=upper" }  #
+BEGIN REAL a;
+      GOTO l;
+      INT i := 1;
+      # The declaration of `i' has not been elaborated.  #
+l:    ASSERT (i = 0)
+END

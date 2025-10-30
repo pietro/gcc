@@ -1,0 +1,40 @@
+# { dg-options "-fstropping=upper" }  #
+# P.G. Hibbard, Proc. Int. Conf. A68 III, Winnipeg, June 1974:
+  applied occurrence of mode-indication in actual-bounds
+  of its actual-declarer
+#
+BEGIN PROC itoa = (INT i) STRING:
+      BEGIN IF i = 0
+            THEN "0"
+            ELSE INT n := i;
+                 STRING res := (i < 0 | n := -n; "-");
+                 WHILE n /= 0
+                 DO INT rem = n %* 10;
+                    res +:= REPR (rem > 9 | (rem - 10) + ABS "a" | rem + ABS "0");
+                    n %:= 10
+                 OD;
+                 res
+            FI
+      END;
+
+      INT n := 4;
+      CHAR a := "a", b := "b", c := "c", d;
+
+      PROC swap = (REF CHAR c1, c2) VOID:
+         (d := c1; c1 := c2; c2 := d);
+
+      MODE HANOI =
+              [IF n > 0
+               THEN n -:= 1;
+                    swap (b, c);
+                    HANOI h1;
+                    swap (b, c);
+                    puts ("move " + itoa (LWB h1 + 1) + " from " + a + " to " + c);
+                    swap (a, b);
+                    HANOI h2;
+                    swap (a, b);
+                    n +:= 1
+               ELSE 0
+               FI : 1] INT;
+      LOC HANOI
+END

@@ -1,0 +1,6 @@
+# { dg-options "-fstropping=upper" }  #
+BEGIN IF INT i := 1; TRUE
+      THEN INT i := 2; ASSERT (i = 2)
+      ELSE ASSERT (i = 1)
+      FI
+END

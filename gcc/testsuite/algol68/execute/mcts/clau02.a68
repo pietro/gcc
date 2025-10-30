@@ -1,0 +1,23 @@
+{ Case conformity.  }
+begin mode M = union ([]int, bool, string);
+      proc prpm = ref proc M: heap proc M := M: "aap ";
+
+      int control := 0;
+      for n to 4
+      do case case n
+              in true,
+                 if false then "aa" else "b " fi,
+                 prpm { Gets deprocedured twice to yield a string.  }
+              out loc[1:1]int := 1 { Gets dereferenced then copied.  }
+              esac
+         in (union(string, bool) sb):
+               (control +:= 1;
+                (sb | (bool b): assert (b), (string s): assert (s = "b " OR s = "aap "))),
+            ([]int i):
+               (control +:= 1;
+                assert (i[1] = 1))
+         out assert (false)
+         esac
+      od;
+      assert (control = 4)
+end

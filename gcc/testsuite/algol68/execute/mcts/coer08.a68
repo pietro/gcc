@@ -1,0 +1,9 @@
+# { dg-options "-fstropping=upper" }  #
+# Soft balance.  #
+BEGIN ASSERT ((HEAP INT x := 314;
+               CASE 3
+               IN SKIP,
+                  IF x < 0 THEN GOTO stop ELSE REF[]INT: NIL FI,
+                  IF x > 0 THEN x ELSE x +:= 1 FI
+               ESAC := 200)[1] = 200)
+END

@@ -1,0 +1,6 @@
+# { dg-options "-fstropping=upper" }  #
+
+BEGIN OP + = (REAL a, b) REAL: a - b; # { dg-error "" } #
+      OP + = (REF REAL a, b) REAL: a - b; # { dg-error "" } #
+      SKIP
+END

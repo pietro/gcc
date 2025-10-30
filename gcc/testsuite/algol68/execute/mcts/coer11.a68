@@ -1,0 +1,37 @@
+# { dg-options "-fstropping=upper" }  #
+# Contains all possible two-member coercion sequences.  #
+BEGIN UNION(INT, BOOL) ib:= 1;
+
+      []REAL(1);
+      []REAL(INT : 1);
+      []REAL(REAL : 1);
+
+      [,]COMPL (1);
+      [] [,]COMPL (LOC INT:= 1);
+      [] [,]COMPL ([]COMPL(1, 2));
+
+      [,,] [] BOOL (16 r f);
+      [,,] [] [,] BOOL (16 r f);
+      [,,] [] BOOL (BITS : 16 r f);
+      [,,] [] [,] BOOL (BITS : 16 r f);
+
+COMMENT XXX bytes pack not supported yet
+      [,] [] CHAR (bytes pack ("ab"));
+      [,] [] [,] CHAR (bytes pack ("ab"));
+      [,] [] CHAR (LOC BYTES:= bytes pack("ab"));
+      [,] [] [,] CHAR(LOC BYTES:= bytes pack("ab"));
+COMMENT
+      
+      REF[]INT(REF INT : HEAP INT:= 1);
+      REF[,]INT(REF[]INT : HEAP[1]INT:= 1);
+
+      UNION(INT, REAL, BOOL) (ib);
+      [] REF [] [,] [] [] INT
+          (LOC PROC REF INT:= REF INT : HEAP INT:= 1) [1];
+
+      []UNION(INT, REAL) (LOC INT:= 1) [1];
+      []UNION(INT, REAL) (REAL : 1) [1];
+      []UNION(INT, REAL, BOOL) (ib) [1];
+
+      SKIP
+END

@@ -1,0 +1,8 @@
+# { dg-options "-fstropping=upper" }  #
+# Operator test, mutual recursion.  #
+BEGIN PRIO +> = 1, +< = 1;
+      INT cnt := 0;
+      OP +> = (INT a, b) INT: IF (cnt +:= 1) = 10 THEN stop ELSE a +< b FI;
+      OP +< = (INT a, b) INT: IF (cnt +:= 1) = 10 THEN stop ELSE a +> b FI;
+      1 +> 2 # loop  #
+END

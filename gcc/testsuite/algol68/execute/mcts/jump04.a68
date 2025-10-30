@@ -1,0 +1,11 @@
+# { dg-options "-fstropping=upper" }  #
+# Jump out of procedure.  #
+BEGIN # Directly  #
+      (PROC jump = VOID: (GOTO l; ASSERT (FALSE));
+       jump; ASSERT (FALSE);
+       l: SKIP);
+      # Indirectly  #
+      (MODE HIDE = PROC VOID;
+       HIDE p = (TRUE | GOTO m);
+       p; ASSERT (FALSE); m: SKIP)
+END

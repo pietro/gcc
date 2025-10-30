@@ -1,0 +1,8 @@
+# { dg-options "-fstropping=upper" }  #
+
+# Mode equivalencing.  #
+BEGIN MODE M = PROC(M)M,
+           N = PROC(N)N,
+           O = UNION(N,M); # { dg-error "" }  #
+      SKIP
+END

@@ -1,0 +1,14 @@
+# { dg-options "-fstropping=upper" }  #
+# Weak balance.  #
+BEGIN COMPL c := (COMPL x:=1;
+                  CASE 2
+                  IN NIL,
+                     IF [] BOOL (TRUE, FALSE)[2]
+                     THEN REF REF [] COMPL: NIL
+                     ELSE x
+                     FI,
+                     LOC PROC REF [] STRUCT (REAL re,im)
+                  ESAC # REF [] COMPL = x # [1]:=3; x);
+      ASSERT (re OF c = 3.0);
+      ASSERT (im OF c = 0.0)
+END
