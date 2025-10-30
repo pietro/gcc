@@ -1,0 +1,30 @@
+# { dg-options "-fstropping=upper" }  #
+# Against over-optimization of string comparison.  #
+BEGIN
+    STRING newline = "'n";
+    STRING str = "string with step > 1"; STRING ref str:= str;
+    [1:UPB str] STRUCT(REAL flub, CHAR c) rst;
+
+    puts ("Result must be:"
+           + newline + str + "." + newline + str + "." + newline
+           + "First test OK" + newline + "Second test OK" + newline
+           + newline + "Result is:" + newline);
+
+    FOR i TO UPB str DO c OF rst[i]:= ref str[i] OD;
+    puts (c OF rst +  "." + newline + ref str + "." + newline);
+
+    IF c OF rst = str AND c OF rst = ref str
+    THEN puts ("First test OK" + newline)
+    ELSE puts ("Erroneous string, is: " + c OF rst
+               + " , must be: " + str + newline);
+         ASSERT (FALSE)
+    FI;
+
+    c OF rst:= str;
+    IF c OF rst /= str OR c OF rst /= ref str
+    THEN puts ("Erroneous string, is: " + c OF rst
+               + " , must be: " + str + newline);
+         ASSERT (FALSE)
+    ELSE puts ("Second test OK" + newline)
+    FI
+END

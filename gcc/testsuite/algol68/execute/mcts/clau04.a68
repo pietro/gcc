@@ -1,0 +1,11 @@
+# { dg-options "-fstropping=upper" }  #
+# Vacuum.  #
+BEGIN ASSERT (LWB []INT BEGIN END = 1);
+      ASSERT (UPB []INT() = 0);
+      CO XXX trimmer ASSERT (UPB([]INT())[1:0] = 0); CO
+      ASSERT (2UPB[,]INT([]INT(puts("here");())) = 0);
+      ASSERT (1UPB[,]INT([]INT(puts("there");())) = 1);
+      ASSERT (2UPB[,]INT(()) = 0);
+      CO runtime error: wrong length CO
+      CO 2UPB[,]INT((),(1)) CO
+END

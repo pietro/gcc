@@ -1,0 +1,13 @@
+# { dg-options "-fstropping=upper" }  #
+
+# Operator test, illegal operator.  #
+BEGIN OP   += = (INT a) INT: -a;
+      OP  +:= = (INT a) INT: -a;
+      OP -/:= = (INT a) INT: -a;
+      OP +==: = (INT a) INT: -a;
+
+      # Correct version.  #
+      +=+:=-/:=+==:+==:+=+:=+==:1;
+      # Bad version.  #
+      +=+:=-/:=+==:+==+=+:=+==:=1 # { dg-error "" }  #
+END

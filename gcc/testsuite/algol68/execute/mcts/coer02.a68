@@ -1,0 +1,20 @@
+# { dg-options "-fstropping=upper" }  #
+# Widening #
+BEGIN
+  FOR i TO 2 DO
+  ASSERT (
+    CASE i IN TRUE,     2r1    OUT []BOOL(TRUE) ESAC
+   [CASE i IN  1  , bits width OUT     SKIP     ESAC]
+    ) OD;                                    # TT #
+
+  INT n := 1;
+  ASSERT ((re OF CASE n IN 1, 2.0, 3 I 5 ESAC) = 1.0);
+  ASSERT ((im OF CASE n IN 1, 2.0, 3 I 5 ESAC) = 0.0);
+  n := 2;
+  ASSERT ((re OF CASE n IN 1, 2.0, 3 I 5 ESAC) = 2.0);
+  ASSERT ((im OF CASE n IN 1, 2.0, 3 I 5 ESAC) = 0.0);
+  n := 3;
+  ASSERT ((re OF CASE n IN 1, 2.0, 3 I 5 ESAC) = 3.0);
+  ASSERT ((im OF CASE n IN 1, 2.0, 3 I 5 ESAC) = 5.0)
+                                       # 1.0 0.0, 2.0 0.0, 3.0 5.0 #
+END

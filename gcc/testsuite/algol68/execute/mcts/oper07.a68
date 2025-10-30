@@ -1,0 +1,12 @@
+# { dg-options "-fstropping=upper" }  #
+# Operator declarations.  #
+BEGIN OP SQ = (REAL x) REAL: x * x,
+         RD = (INT x) REAL: random,
+      OP (REAL)REAL SIN = (puts ("Print ten times 1\n"); sin),
+                    COS  = cos;
+
+      puts ("\n");
+      TO 10
+      DO REAL x = RD 1; SQ SIN x + SQ COS x OD;
+      SKIP
+END

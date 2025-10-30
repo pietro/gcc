@@ -1,0 +1,8 @@
+# { dg-options "-fstropping=upper" }  #
+
+# Operator test, mutual recursion.  #
+BEGIN PRIO +>=1, +<=1;
+      OP +> = (INT a, b) INT: a+<b;
+      OP +< = (INT a, b) INT: a+>b;
+      1+>2
+END

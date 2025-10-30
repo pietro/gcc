@@ -1,0 +1,32 @@
+# { dg-options "-fstropping=upper" }  #
+BEGIN ASSERT (UPB []INT(1,2,3,4) = 4);
+      ASSERT (UPB "abcde" = 5);
+      ASSERT (UPB []INT(SKIP,SKIP)[1:1@5] = 5);
+      ASSERT (2 UPB [,]INT(1,2)[,@4] = 4);
+
+      # All declarers are of the mode row-of, so UPB/LWB
+        should work.
+      #
+      ASSERT (UPB UNION([]INT,[,]INT)([]INT (1)) = 1);
+      ASSERT (UPB UNION([]INT,[,]INT)([,]INT (1,1)) = 2);
+      ASSERT (UPB UNION([]STRING,STRING)("ab") = 2);
+      ASSERT (LWB UNION([]INT,[,]INT)([]INT (1)) = 1);
+      ASSERT (LWB UNION([]INT,[,]INT)([,]INT (1,1)) = 1);
+      ASSERT (LWB UNION([]STRING,STRING)("ab") = 1);
+
+      ASSERT (1 UPB [,,]CHAR ("abc", "def") = 2);
+      ASSERT (2 UPB [,,]CHAR ("abc", "def") = 1);
+      ASSERT (3 UPB [,,]CHAR ("abc", "def") = 3);
+
+      ASSERT (LWB LOC STRING LWB LOC STRING = 1);
+
+      # Balance.  #
+      FOR n TO 4
+      DO n UPB CASE n
+               IN []INT (1),
+                  [,]REAL (1),
+                  UNION([]INT,[,,]BOOL) ([,,]BOOL (TRUE)),
+                  UNION([]INT,UNION([,]REAL,[,,,]CHAR))([,,,]CHAR ("a"))
+               ESAC
+      OD
+END

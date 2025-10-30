@@ -1,0 +1,17 @@
+# { dg-options "-fstropping=upper" }  #
+# Unions.  #
+BEGIN MODE N = UNION (REAL, UNION (BOOL, INT)),
+           M = UNION (UNION (REAL, BOOL), INT);
+      # Both okay, since M and N are the same.  #
+      PROC M (PROC N (SKIP));
+      PROC N (PROC M (SKIP));
+
+      MODE U = UNION (INT, PROC(U)INT),
+           V = UNION (U, PROC(V)INT);
+      # Both okay, since U and V are the same.  #
+      PROC U (PROC V (SKIP));
+      PROC V (PROC U (SKIP));
+
+      SKIP
+END
+

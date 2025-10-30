@@ -1,0 +1,8 @@
+# { dg-options "-fstropping=upper" }  #
+# ALGOL68 test to see if the compiler exists #
+BEGIN INT i, j, k;
+      INT s := 17, INT t := 3;
+      i := 0;
+      FOR l FROM 0 BY 2 TO 13 DO i +:= l OD;
+      ASSERT (i = 42)
+END

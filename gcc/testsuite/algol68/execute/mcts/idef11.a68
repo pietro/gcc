@@ -1,0 +1,17 @@
+# { dg-options "-fstropping=upper" }  #
+# More operators and uniting.  #
+BEGIN MODE UN = UNION (INT, REAL);
+      OP + = (UNION (REF UN, REF CHAR) a) VOID:
+      BEGIN CASE a
+            IN (REF UN ru): (ru |
+                             (INT i): (puts ("integer"); SKIP),
+                             (REAL r): (puts ("real"); SKIP)
+                            ),
+               (REF CHAR ch): (puts ("char"); SKIP)
+            ESAC
+      END;
+
+      +(HEAP UN := 1);
+      +(HEAP UN := 2.0);
+      +(HEAP CHAR := "3")
+END

@@ -1,0 +1,8 @@
+# { dg-options "-fstropping=upper" }  #
+# Some declarers.  #
+BEGIN [1:10]INT i,
+      [1:10]STRUCT(REF[]INT i, BOOL j) k,
+      [1:10]STRUCT([1:10]INT i, BOOL j) l,
+      [1:10]REF[]INT p;
+      SKIP
+END

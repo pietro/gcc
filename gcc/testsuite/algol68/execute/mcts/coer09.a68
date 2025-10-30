@@ -1,0 +1,16 @@
+# { dg-options "-fstropping=upper" }  #
+# Soft balance.  #
+BEGIN ASSERT (CASE 2
+              IN SKIP,
+                 NIL,
+                 IF BOOL (SKIP)
+                 THEN GOTO stop
+                 ELSE PROC REF[]INT (SKIP)
+                 FI
+              ESAC :=: CASE 3
+                       IN LOC REF REF []INT,
+                          LOC INT,
+                          NIL
+                       ESAC)
+      # TRUE, would you believe.  #
+END

@@ -1,0 +1,53 @@
+# { dg-options "-fstropping=upper" }  #
+# Morf versus comorf.  #
+BEGIN BOOL canary := FALSE;
+      PROC right = VOID: canary := TRUE,
+           wrong = VOID: (ASSERT (FALSE)),
+           check = VOID: (ASSERT (canary); canary := FALSE);
+
+      PROC deproc = (STRING mcm) VOID:
+         (puts (mcm); puts ("deproc:"));
+      PROC nodeproc = (STRING mcm) VOID:
+         (puts (mcm); puts ("nodeproc:"));
+
+      deproc ("selection");
+      proc OF STRUCT(PROC VOID proc, INT d)(right, SKIP);
+      check;
+
+      deproc ("slice");
+      []PROC VOID(right)[1];
+      check;
+
+      deproc ("routine text");
+      PROC VOID: right;
+      check;
+
+      deproc ("formula");
+      OP + = (INT i) PROC VOID: right; +1;
+      check;
+
+      deproc ("call");
+      ((INT i) PROC VOID: right)(1);
+      check;
+
+      deproc ("identifier");
+      right;
+      check;
+
+      nodeproc ("assignation");
+      LOC PROC VOID := wrong;
+
+      nodeproc ("cast");
+      PROC VOID (wrong);
+
+      nodeproc ("generator");
+      LOC PROC VOID;
+
+      FOR i TO 2
+      DO IF i = 1
+         THEN deproc ("balance"); right
+         ELSE nodeproc ("balance"); PROC VOID(wrong)
+         FI;
+         IF i = 1 THEN check FI
+      OD
+END

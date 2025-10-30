@@ -1,0 +1,3 @@
+# { dg-options "-fstropping=upper" }  #
+CASE UNION(BOOL, VOID)(SKIP) IN (VOID): SKIP ESAC
+

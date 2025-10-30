@@ -1,0 +1,37 @@
+The tests in compile/mcts and execute/mcts have been adapted from:
+
+  The Revised MC Algol 68 Test Set, version 3
+
+edited by Dick Grüne in 1973 and originally published by the
+Mathematisch Centrum in Amsterdam, a non-profit institution founded in
+1946 aiming at the promotion of pure mathematics and its applications.
+
+The WG 2.1 blessed the test set with this authorized statement:
+
+  "This ALGOL68 Test Set has been reviewed by the IFIP Working Group
+   2.1, which considers it as a valuable means of testing
+   implementations of ALGOL68."
+
+The test set explores all odd corners of Algol 68.
+
+The tests have been modified in order to accommodate the GNU Algol 68
+implementation.  Some general adaptations are:
+
+- Many tests in the original MC test set print out expected results so
+  they can be verified visually.  We check for them programmatically
+  instead making use of the ASSERT construct.
+
+Additional particular modifications are explained and justified in the
+source files of the corresponding tests.
+
+The tests fall in the following categories:
+
+Null programs (nullNN.a68)
+  Various forms of empty enclosed-clauses.
+
+Simple tests (simpNN.a68)
+  Contains almost all language features of the language used in
+  simple ways.
+
+Declarers tests (declNN.a68)
+  Declarers and their well-formedness.

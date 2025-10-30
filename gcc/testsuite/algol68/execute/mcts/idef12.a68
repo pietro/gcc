@@ -1,0 +1,52 @@
+# { dg-options "-fstropping=upper" }  #
+# Priorities and weird constructions #
+BEGIN
+WHILE INT n:= 0;
+    OP + = (REF INT i, CHAR c) STRING: "ab";
+  ( WHILE DO GOTO skip OD; TRUE DO SKIP OD;
+    PRIO + = 1; SKIP
+    EXIT skid:
+        (HEAP INT +:= 1 + "1" +=: (HEAP STRING := "c")) = "abc"
+    EXIT skip: GOTO skid
+  )
+DO DO
+    # The implicit structure of the formulas is
+            ( a O1 ( b + ( c O2 d)))
+      which is only achieved if   pr(O1) < pr(+) < pr(O2)
+    #
+
+    PRIO + = 2;
+
+    OP + = (INT i, BOOL b) STRING: (puts("corr"); "ect,");
+    OP + = (REAL x, BOOL b) BOOL: (puts("Line "); FALSE);
+    OP + = (CHAR c, BOOL b) BOOL: (puts("two "); FALSE);
+    OP + = (BITS b, INT i) STRING: (puts("one "); "Nope ");
+    OP + = (REF BYTES b, REAL x) INT: (puts("is "); -(n+:=1));
+    OP + = (STRING s, COMPL c) BITS: (puts("sho"); drop);
+
+     puts((HEAP STRING +:=
+         ABS
+         IF PRIO + = 3;
+             ODD n OR 2.0 + "a" = "b"
+         THEN PRIO + = 4;
+             TRUE AND "a" + 2 < 3
+         ELSE PRIO + = 5;
+             "prio" = 2r1 + 2 - 3
+         FI
+
+         +              # prio 2 #
+
+         CASE PRIO + = 7;
+             0 - LOC BYTES + 3.0 ** 5
+         IN TRUE, FALSE
+         OUT PRIO + = 8;
+             3 ELEM "prio" + 2.0 I 3.0
+         ESAC
+
+         AND random < .5) + "\n")
+     OD
+     EXIT drop:
+         puts("rter than line three." + "\n" + "End of test");
+         stop
+OD
+END
