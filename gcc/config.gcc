@@ -224,7 +224,7 @@
 #			has its own definition of targetjitm.
 #  target_has_targetalgol68m
 #			Set to yes or no depending on whether the target
-#			has its own deinition of targetdm.
+#			has its own definition of targetalgol68m.
 
 out_file=
 common_out_file=
