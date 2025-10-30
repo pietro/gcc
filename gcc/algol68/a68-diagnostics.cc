@@ -275,23 +275,23 @@ diagnostic (int sev, int opt,
 
   /* Prepare rich location and diagnostics.  */
   rich_location rich_loc (line_table, loc);
-  diagnostics::diagnostic_info diagnostic;
-  enum diagnostics::kind kind;
+  diagnostic_info diagnostic;
+  diagnostic_t kind;
 
   switch (sev)
     {
     case A68_FATAL:
-      kind = diagnostics::kind::fatal;
+      kind = DK_FATAL;
       break;
     case A68_INFORM:
-      kind = diagnostics::kind::note;
+      kind = DK_NOTE;
       break;
     case A68_WARNING:
-      kind = diagnostics::kind::warning;
+      kind = DK_WARNING;
       break;
     case A68_SCAN_ERROR:
     case A68_ERROR:
-      kind = diagnostics::kind::error;
+      kind = DK_ERROR;
       break;
     default:
       gcc_unreachable ();
@@ -301,7 +301,7 @@ diagnostic (int sev, int opt,
 		       &argp,
 		       &rich_loc, kind);
   if (opt != 0)
-    diagnostic.m_option_id = opt;
+    diagnostic.option_id = opt;
   diagnostic_report_diagnostic (global_dc, &diagnostic);
 
   if (sev == A68_SCAN_ERROR)
