@@ -1,0 +1,5 @@
+{ Check value yielding of DSA serial clauses.  }
+begin assert ((ref int foo = loc int := 100;
+               foo) = 100);
+      assert (([10000]int foo; foo[10] := 666; foo)[10] = 666)
+end
