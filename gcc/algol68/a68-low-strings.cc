@@ -102,7 +102,7 @@ copy_string (tree elements, tree to_index, tree str)
 
     /* from_index = from_index + 1 */
     a68_add_stmt (fold_build2 (POSTINCREMENT_EXPR, sizetype, from_index, size_one_node));
-  }  
+  }
 
   /* End of loop body.  */
   tree loop_body = a68_pop_range ();
@@ -133,7 +133,7 @@ a68_string_concat (tree str1, tree str2)
       tree s1 = a68_low_func_param (string_concat_fndecl, "s1", TREE_TYPE (str1));
       tree s2 = a68_low_func_param (string_concat_fndecl, "s2", TREE_TYPE (str2));
       DECL_ARGUMENTS (string_concat_fndecl) = chainon (s1, s2);
-						       
+
       a68_push_function_range (string_concat_fndecl, char_pointer_type,
 			       true /* top_level */);
 
@@ -271,10 +271,12 @@ a68_string_cmp (tree s1, tree s2)
 
 /* Return a newly allocated UTF-8 string resulting from processing the string
    breaks in STR.  This function assumes the passed string is well-formed (the
-   scanner is in charge of seeing that is true) and just ICEs if it is not.  */
+   scanner is in charge of seeing that is true) and just ICEs if it is not.
+   NODE is used as the location for diagnostics in case the string breaks
+   contain some invalid data.  */
 
 char *
-a68_string_process_breaks (const char *str)
+a68_string_process_breaks (NODE_T *node, const char *str)
 {
   size_t len = 0;
   char *res = NULL;
@@ -362,6 +364,7 @@ a68_string_process_breaks (const char *str)
 		    gcc_assert (p[0] == 'u' || p[0] == 'U');
 		    p++;
 
+		    const char *begin = p;
 		    char *end;
 		    int64_t codepoint = strtol (p, &end, 16);
 		    gcc_assert (end > p);
@@ -369,7 +372,13 @@ a68_string_process_breaks (const char *str)
 		    /* Append the UTF-8 encoding of the obtained codepoint to
 		       the `res' string.  */
 		    int n = a68_u8_uctomb ((uint8_t *) res + offset, codepoint, 6);
-		    gcc_assert (n > 0);
+		    if (n < 0)
+		      {
+			char *start = CHAR_IN_LINE (INFO (node)) + (begin - str);
+			a68_scan_error (LINE (INFO (node)), start,
+					"invalid Unicode codepoint in string literal");
+		      }
+
 		    offset += n;
 		  }
 		break;

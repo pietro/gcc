@@ -611,7 +611,7 @@ tree a68_string_concat (tree str1, tree str2);
 tree a68_string_mult (tree str1, tree str2);
 tree a68_string_from_char (tree c);
 tree a68_string_cmp (tree s1, tree s2);
-char *a68_string_process_breaks (const char *str);
+char *a68_string_process_breaks (NODE_T *p, const char *str);
 
 /* a68-low-chars.cc */
 

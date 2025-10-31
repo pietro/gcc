@@ -122,7 +122,7 @@ tree
 a68_lower_string_denotation (NODE_T *p, LOW_CTX_T ctx ATTRIBUTE_UNUSED)
 {
   /* First process string breaks.  */
-  char *str = a68_string_process_breaks (NSYMBOL (p));
+  char *str = a68_string_process_breaks (p, NSYMBOL (p));
 
   /* Build a multiple of UCS-4 CHARs from the resulting UTF-8 string.  */
   size_t ucslen;
@@ -173,7 +173,7 @@ a68_lower_denotation (NODE_T *p, LOW_CTX_T ctx)
     return (NSYMBOL (p)[0] == 'T') ? boolean_true_node : boolean_false_node;
   else if (moid == M_CHAR)
     {
-      char *s = a68_string_process_breaks (NSYMBOL (p));
+      char *s = a68_string_process_breaks (p, NSYMBOL (p));
       uint32_t ucs;
       int length = a68_u8_mbtouc (&ucs, (const uint8_t *) s, 1);
       gcc_assert (length == 1);
