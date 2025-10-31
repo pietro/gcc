@@ -7,5 +7,5 @@ begin prio % = 9;
       assert (ABS %"'r" = 13);
       assert (%"'(  u0061)" = "a");
       assert (%"'(U00000061  )" = "a");
-      assert (%"'(u1234)" = invalid_char)
+      assert (%"'(u1234)" = replacement_char)
 end

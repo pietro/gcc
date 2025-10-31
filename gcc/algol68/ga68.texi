@@ -1668,8 +1668,8 @@ denotation, subject to the following restrictions:
 @item
 List of characters string breaks @code{'(...)} that contain more than
 one character code are not allowed in character denotations.  If the
-specified code point is not a valid Unicode character then the value
-of the denotation is @code{invalid char}.
+specified code point is not a valid Unicode character then a
+compilation error shall be raised.
 @end itemize
 
 @node Standard prelude
@@ -2636,8 +2636,14 @@ Positive infinity expressed in a real value.
 Negative infinity expressed in a real value.
 @end deftypevr
 
-@deftypevr Constant @B{char} {invalid char}
-A character that is unknown or unrepresentable in Unicode.
+@deftypevr Constant @B{char} {replacement char}
+A character that is unknown, unrecognizable or unrepresentable in
+Unicode.
+@end deftypevr
+
+@deftypevr Constant @B{char} {eof char}
+@B{char} value that doesn't denote an actual char, but an end-of-file
+situation.
 @end deftypevr
 
 @node Extended rows operators
@@ -2915,7 +2921,7 @@ involved.
 @deftypefn Procedure {} {putchar} {= (@B{char} c) @B{char}}
 Write the given character to the standard output.  This procedure
 yields @code{c} in case the character got successfully written, or
-@code{invalid char} otherwise.
+@code{eof char} otherwise.
 @end deftypefn
 
 @deftypefn Procedure {} {puts} {= (@B{string} str) @B{void}}
@@ -2924,8 +2930,8 @@ Write the given string to the standard output.
 
 @deftypefn Procedure {} {fputc} {= (@B{int} fd, @B{char} c) @B{int}}
 Write given character @code{c} to the file with descriptor @code{fd}.
-This procedure yields @code{c} on success, or @code{invalid char}
-on error.
+This procedure yields @code{c} on success, or @code{eof char} on
+error.
 @end deftypefn
 
 @deftypefn Procedure {} {fputs} {= (@B{int} fd, @B{string} str) @B{int}}
@@ -2939,7 +2945,7 @@ success, or 0 on error.
 @deftypefn Procedure {} {getchar} {= @B{char}}
 Read a character from the standard input.  This procedure yields the
 read character in case the character got successfully read, or
-@code{invalid char} otherwise.
+@code{eof char} otherwise.
 @end deftypefn
 
 @deftypefn Procedure {} {gets} {= (@B{int} n) @B{ref} @B{string}}
@@ -2953,8 +2959,10 @@ end of line is reached.
 
 @deftypefn Procedure {} {fgetc} {= (@B{int} fd) @B{int}}
 Read a character from the file with descriptor @code{fd}.  This
-procedure yields the read character in case the character got
-successfully read, or @code{invalid char} otherwise.
+procedure yields the read character in case a valid Unicode character
+got successfully read.  If an unrecognizable or unknown character is
+found then this procedure yields @code{replacement char}.  In case of
+end of file this procedure yields @code{eof char}.
 @end deftypefn
 
 @deftypefn Procedure {} {fgets} {= (@B{int} fd, @B{int} n) @B{ref} @B{string}}

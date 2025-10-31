@@ -1327,7 +1327,8 @@ gnu_prelude (void)
   a68_idf (A68_EXT, "minreal", M_REAL, a68_lower_minreal);
   a68_idf (A68_EXT, "longminreal", M_LONG_REAL, a68_lower_minreal);
   a68_idf (A68_EXT, "longlongminreal", M_LONG_LONG_REAL, a68_lower_minreal);
-  a68_idf (A68_EXT, "invalidchar", M_CHAR, a68_lower_invalidchar);
+  a68_idf (A68_EXT, "eofchar", M_CHAR, a68_lower_eofchar);
+  a68_idf (A68_EXT, "replacementchar", M_CHAR, a68_lower_replacementchar);
   /* REAL procedures.  */
   m = A68_MCACHE (proc_real_real);
   a68_idf (A68_EXT, "log", m, a68_lower_log);

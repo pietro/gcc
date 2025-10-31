@@ -34,6 +34,8 @@
 
 #include "ga68.h"
 
+#define EOF_PSEUDO_CHARACTER -1
+
 /* Some Unicode code points used in this file.  */
 
 #define REPLACEMENT_CHARACTER 0xFFFD
@@ -208,11 +210,11 @@ _libga68_posixfputc (int fd, uint32_t c)
 
   int u8len = _libga68_u8_uctomb (u8, c, 6);
   if (u8len < 0)
-    return REPLACEMENT_CHARACTER;
+    return EOF_PSEUDO_CHARACTER;
 
   ssize_t ret = write (fd, &u8, u8len);
   if (ret == -1)
-    return REPLACEMENT_CHARACTER;
+    return EOF_PSEUDO_CHARACTER;
   else
     return c;
 }
@@ -241,7 +243,7 @@ _libga68_posixfgetc (int fd)
   /* Read first UTF-8 character.  This gives us the total length of the
      character.  */
   if (read (fd, &c, 1) != 1)
-    return REPLACEMENT_CHARACTER;
+    return EOF_PSEUDO_CHARACTER;
 
   if (c < 128)
     morechars = 0;
@@ -256,7 +258,7 @@ _libga68_posixfgetc (int fd)
   for (i = 0; i < morechars; ++i)
     {
       if (read (fd, &c, 1) != 1)
-	return REPLACEMENT_CHARACTER;
+	return EOF_PSEUDO_CHARACTER;
       u8c[i + 1] = c;
     }
 
@@ -293,7 +295,7 @@ _libga68_posixfgets (int fd, int nchars, size_t *len)
       do
 	{
 	  uc = _libga68_posixfgetc (fd);
-	  if (uc == REPLACEMENT_CHARACTER)
+	  if (uc == EOF_PSEUDO_CHARACTER)
 	    break;
 	  res[n++] = uc;
 	}
@@ -307,14 +309,14 @@ _libga68_posixfgets (int fd, int nchars, size_t *len)
       do
 	{
 	  uc = _libga68_posixfgetc (fd);
-	  if (uc != REPLACEMENT_CHARACTER)
+	  if (uc != EOF_PSEUDO_CHARACTER)
 	    {
 	      if (n % 80 == 0)
 		res = _libga68_realloc (res, n * 80 * sizeof (uint32_t) + 80 * sizeof (uint32_t));
 	      res[n++] = uc;
 	    }
 	}
-      while (uc != NEWLINE && uc != REPLACEMENT_CHARACTER);
+      while (uc != NEWLINE && uc != EOF_PSEUDO_CHARACTER);
       if (n > 0)
 	res = _libga68_realloc (res, n * 80 * sizeof (uint32_t));
     }

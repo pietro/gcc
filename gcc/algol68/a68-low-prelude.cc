@@ -1276,14 +1276,25 @@ a68_lower_flip (NODE_T *p ATTRIBUTE_UNUSED,
 }
 
 tree
-a68_lower_invalidchar (NODE_T *p ATTRIBUTE_UNUSED,
+a68_lower_eofchar (NODE_T *p ATTRIBUTE_UNUSED,
+		   LOW_CTX_T ctx ATTRIBUTE_UNUSED)
+{
+  static tree eofchar = NULL_TREE;
+
+  if (eofchar == NULL_TREE)
+    eofchar = build_int_cst (a68_char_type, -1);
+  return eofchar;
+}
+
+tree
+a68_lower_replacementchar (NODE_T *p ATTRIBUTE_UNUSED,
 		       LOW_CTX_T ctx ATTRIBUTE_UNUSED)
 {
-  static tree invalidchar = NULL_TREE;
+  static tree replacementchar = NULL_TREE;
 
-  if (invalidchar == NULL_TREE)
-    invalidchar = build_int_cst (a68_char_type, 0xfffd);
-  return invalidchar;
+  if (replacementchar == NULL_TREE)
+    replacementchar = build_int_cst (a68_char_type, 0xfffd);
+  return replacementchar;
 }
 
 tree
