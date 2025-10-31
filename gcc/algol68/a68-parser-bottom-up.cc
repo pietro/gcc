@@ -126,7 +126,7 @@ pad_node (NODE_T *p, enum a68_attribute a)
 static void
 a68_extension (NODE_T *p)
 {
-  a68_warning (p, OPT_Wextensions, "AST node is an extension");
+  a68_warning (p, OPT_Wextensions, "ast node is an extension");
 }
 
 /* Diagnose for clauses not yielding a value.  */
