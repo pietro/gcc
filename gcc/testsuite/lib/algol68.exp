@@ -213,5 +213,7 @@ proc algol68_target_compile { source dest type options } {
 
     set options [concat "$ALWAYS_ALGOL68FLAGS" $options]
     set options [dg-additional-files-options $options $source $dest $type]
-    return [target_compile $source $dest $type $options]
+    set ret [eval [target_compile $source $dest $type $options]]
+    unset individual_timeout
+    return $ret
 }
