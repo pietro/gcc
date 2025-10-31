@@ -261,8 +261,9 @@ _libga68_posixfgetc (int fd)
     }
 
   uint32_t res;
-  int length = _libga68_u8_mbtouc (&res, (const uint8_t *) &u8c, 1);
-  if (res == REPLACEMENT_CHARACTER || length != 1)
+  int num_units = morechars + 1;
+  int length = _libga68_u8_mbtouc (&res, (const uint8_t *) &u8c, num_units);
+  if (res == REPLACEMENT_CHARACTER || length != num_units)
     return REPLACEMENT_CHARACTER;
   else
     return res;
