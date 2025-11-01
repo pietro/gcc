@@ -1,0 +1,11 @@
+{ Transiency tests.  }
+begin bool b = true, y = false;
+
+      assert ((if b then loc char else (loc string)[1] fi := "a")
+              = "a");
+      assert ((if b then loc[1:3]char else (loc string)[] fi := "bcd")
+              = "bcd");
+      { XXX original says loc string but parser doesn't like it.
+        probably parser bug }
+      if y then loc char else loc[1:1,1:3]char fi := "efg"
+end

@@ -1,0 +1,8 @@
+# { dg-options "-fstropping=upper" }  #
+# Redeclaring LWB.  #
+BEGIN OP LWB = ([]INT a) REAL: a[1] + a[2];
+      OP LWB = ([]REAL a) REAL: a[1] - a[2];
+
+      ASSERT (LWB (1| (8, 2), 3, []INT: SKIP) = 10);
+      ASSERT (LWB (1| (8, 2), 3, []REAL: SKIP) = 6.0)
+END

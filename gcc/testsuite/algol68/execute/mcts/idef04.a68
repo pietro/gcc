@@ -1,0 +1,11 @@
+# { dg-options "-fstropping=upper" }  #
+BEGIN INT i := 1, j := -1;
+
+      PROC a = VOID: (INT i = 2, j = -2; b);
+      PROC b = VOID: (INT j = -3;
+                      PROC c = VOID: (ASSERT (i + j = -2));
+                      d (c));
+      PROC d = (PROC VOID e) VOID:
+         (INT i = 4, j = -4; e);
+      a
+END

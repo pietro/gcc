@@ -37,6 +37,7 @@ static struct hook_desc hook_array[] = {
 #include "d/d-target.def"
 #include "rust/rust-target.def"
 #include "jit/jit-target.def"
+#include "algol68/algol68-target.def"
 #undef DEFHOOK
 };
 

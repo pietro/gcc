@@ -1,0 +1,2 @@
+# { dg-options "-fstropping=upper" }  #
+IF BOOL (SKIP) THEN SKIP FI

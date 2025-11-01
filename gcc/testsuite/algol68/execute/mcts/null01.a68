@@ -1,0 +1,5 @@
+# { dg-options "-fstropping=upper" }  #
+# The original test uses just SKIP, but this compiler requires an
+  enclosed clause.  #
+
+(SKIP)

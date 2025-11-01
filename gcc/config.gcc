@@ -93,6 +93,9 @@
 #  tm_rust_file		list of headers with definitions of target hook
 #			macros for the Rust compiler.
 #
+#  tm_algol68_file	list of headers with definitions of target hook
+#			macros for the Algol68 compiler.
+#
 #  out_file		The name of the machine description C support
 #			file, if different from "$cpu_type/$cpu_type.c".
 #
@@ -158,6 +161,9 @@
 #  rust_target_objs	List of extra target-dependent objects that be
 #			linked into the Rust compiler only.
 #
+#  algol68_target_objs	List of extra target-dependent objects that be
+#			linked into the Algol68 compiler only.
+#
 #  target_gtfiles       List of extra source files with type information.
 #
 #  xm_defines		List of macros to define when compiling for the
@@ -216,6 +222,9 @@
 #
 #  target_has_targetjitm	Set to yes or no depending on whether the target
 #			has its own definition of targetjitm.
+#  target_has_targetalgol68m
+#			Set to yes or no depending on whether the target
+#			has its own definition of targetalgol68m.
 
 out_file=
 common_out_file=
@@ -235,11 +244,13 @@ d_target_objs=
 jit_target_objs=
 fortran_target_objs=
 rust_target_objs=
+algol68_target_objs=
 target_has_targetcm=no
 target_has_targetm_common=yes
 target_has_targetdm=no
 target_has_targetrustm=no
 target_has_targetjitm=no
+target_has_targetalgol68m=no
 tm_defines=
 xm_defines=
 # Set this to force installation and use of collect2.
@@ -635,6 +646,16 @@ then
 	tm_jit_file="${tm_jit_file} ${cpu_type}/${cpu_type}-jit.h"
 fi
 
+tm_algol68_file=
+if test -f ${srcdir}/config/${cpu_type}/${cpu_type}-algol68.h
+then
+	tm_algol68_file="${cpu_type}/${cpu_type}-algol68.h"
+fi
+if test -f ${srcdir}/config/${cpu_type}/${cpu_type}-algol68.cc
+then
+	algol68_target_objs="${algol68_target_objs} ${cpu_type}-algol68.o"
+fi
+
 extra_modes=
 if test -f ${srcdir}/config/${cpu_type}/${cpu_type}-modes.def
 then
@@ -805,9 +826,11 @@ case ${target} in
   d_target_objs="${d_target_objs} darwin-d.o"
   fortran_target_objs="darwin-f.o"
   rust_target_objs="${rust_target_objs} darwin-rust.o"
+  algol68_target_objs="${algol68_target_objs} darwin-algol68.o"
   target_has_targetcm=yes
   target_has_targetdm=yes
   target_has_targetrustm=yes
+  target_has_targetalgol68m=no
   extra_objs="${extra_objs} darwin.o"
   extra_gcc_objs="darwin-driver.o"
   default_use_cxa_atexit=yes
@@ -840,6 +863,8 @@ case ${target} in
   target_has_targetdm=yes
   rust_target_objs="${rust_target_objs} dragonfly-rust.o"
   target_has_targetrustm=yes
+  algol68_target_objs="${algol68_target_objs} dragonfly-algol68.o"
+  target_has_targetalgol68m=yes
   ;;
 *-*-freebsd*)
   # This is the generic ELF configuration of FreeBSD.  Later
@@ -893,12 +918,16 @@ case ${target} in
   target_has_targetdm=yes
   rust_target_objs="${rust_target_objs} freebsd-rust.o"
   target_has_targetrustm=yes
+  algol68_target_objs="${algol68_target_objs} freebsd-algol68.o"
+  target_has_targetalgol68m=yes
   ;;
 *-*-fuchsia*)
   native_system_header_dir=/include
   tmake_file="t-fuchsia"
   rust_target_objs="${rust_target_objs} fuchsia-rust.o"
   target_has_targetrustm=yes
+  algol68_target_objs="${algol68_target_objs} fuchsia-algol68.o"
+  target_has_targetalgol68m=yes
   ;;
 *-*-linux* | frv-*-*linux* | *-*-kfreebsd*-gnu | *-*-gnu* | *-*-kopensolaris*-gnu | *-*-uclinuxfdpiceabi)
   extra_options="$extra_options gnu-user.opt"
@@ -1007,6 +1036,8 @@ case ${target} in
   esac
   rust_target_objs="${rust_target_objs} netbsd-rust.o"
   target_has_targetrustm=yes
+  algol68_target_objs="${algol68_target_objs} netbsd-algol68.o"
+  target_has_targetalgol68m=yes
   ;;
 *-*-openbsd*)
   tmake_file="t-openbsd"
@@ -1024,6 +1055,8 @@ case ${target} in
   target_has_targetdm=yes
   rust_target_objs="${rust_target_objs} openbsd-rust.o"
   target_has_targetrustm=yes
+  algol68_target_objs="${algol68_target_objs} openbsd-algol68.o"
+  target_has_targetalgol68m=yes
   ;;
 *-*-phoenix*)
   gas=yes
@@ -1086,6 +1119,8 @@ case ${target} in
   target_has_targetdm=yes
   rust_target_objs="${rust_target_objs} sol2-rust.o"
   target_has_targetrustm=yes
+  algol68_target_objs="${algol68_target_objs} sol2-algol68.o"
+  target_has_targetalgol68m=yes
   ;;
 *-*-*vms*)
   extra_options="${extra_options} vms/vms.opt"
@@ -1120,6 +1155,9 @@ case ${target} in
 
   rust_target_objs="${rust_target_objs} vxworks-rust.o"
   target_has_targetrustm=yes
+
+  algol68_target_objs="${algol68_target_objs} vxworks-algol68.o"
+  target_has_targetalgol68m=yes
 
   extra_gcc_objs="vxworks-driver.o"
 
@@ -2247,6 +2285,8 @@ i[34567]86-*-mingw* | x86_64-*-mingw*)
 	target_has_targetdm="yes"
 	rust_target_objs="${rust_target_objs} winnt-rust.o"
 	target_has_targetrustm="yes"
+        algol68_target_objs="${algol68_target_objs} winnt-algol68.o"
+        target_has_targetalgol68m=yes
 	case ${target} in
 		x86_64-*-* | *-w64-*)
 			need_64bit_isa=yes
@@ -3734,6 +3774,10 @@ fi
 
 if [ "$target_has_targetjitm" = "no" ]; then
   jit_target_objs="$jit_target_objs default-jit.o"
+fi
+
+if [ "$target_has_targetalgol68" = "no" ]; then
+  algol68_target_objs="$algol68_target_objs default-algol68.o"
 fi
 
 # Support for --with-cpu and related options (and a few unrelated options,

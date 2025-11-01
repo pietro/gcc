@@ -1,0 +1,8 @@
+# { dg-options "-fstropping=upper" }  #
+# Mode equivalencing.  #
+BEGIN MODE N = PROC(M)M, M = PROC(N)N;
+      # Both okay, since M and N are the same.  #
+      PROC M(PROC N(SKIP));
+      PROC N(PROC M(SKIP));
+      SKIP
+END

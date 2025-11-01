@@ -1,0 +1,14 @@
+# { dg-options "-fstropping=upper" }  #
+# loops.  #
+BEGIN INT i = 5, INT c := 0;
+      FOR i TO i DO c +:= 1 OD;
+      ASSERT (c = 5);
+      INT s = 8;
+      FOR a FROM s BY 1 WHILE INT b = a - s + 1; a <= 2 * s
+      DO INT q := 0, r := a;
+         WHILE r >= b DO (q +:= 1, r -:=  b) OD;
+         IF a /= b * q +  r OR r >= b
+         THEN ASSERT (FALSE)
+         FI
+      OD
+END

@@ -85,6 +85,7 @@ Language runtime libraries
     * libcpp
     * libdecnumber
     * libffi
+    * liga68
     * libgcc
     * libgfortran
     * libgm2

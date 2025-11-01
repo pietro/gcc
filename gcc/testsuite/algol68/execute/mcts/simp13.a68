@@ -1,0 +1,13 @@
+# { dg-options "-fstropping=upper" }  #
+# Continued fraction.  #
+BEGIN OP / = ([]REAL a, b) REAL:
+         (UPB a = 0 | 0 | a[1]/(b[1] + a[2:]/b[2:])),
+      [1:20]REAL x,y;
+
+      FOR i TO 20
+      DO x[i] := (i-1)**2; y[i] := 2*i-1 OD;
+      x[1] := 1;
+      FOR i TO 20
+      DO 4 * (x[1:i]/y[1:i]) # Approximations of PI  #
+      OD
+END

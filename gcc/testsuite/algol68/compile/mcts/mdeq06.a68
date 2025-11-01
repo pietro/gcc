@@ -1,0 +1,18 @@
+# { dg-options "-fstropping=upper" }  #
+
+# Some equivalencing.  #
+BEGIN MODE A = STRUCT (REF A l, REF A r),
+           B = STRUCT (REF B l, REF B r),
+           C = STRUCT (REF D l, REF E r),
+           D = STRUCT (REF E l, REF C r),
+           E = STRUCT (REF C l, REF D r),
+           F = STRUCT (REF STRUCT (REF A l, REF B r) l,
+                       REF STRUCT (REF STRUCT (REF C l, REF D r) l,
+                                   REF STRUCT (REF E l, REF F r) r
+                                  ) r
+                      );
+
+      # error - all modes are the same  #
+      MODE M = UNION (A,B,C,D,E,F); # { dg-error "" }  #
+      SKIP
+END

@@ -615,6 +615,8 @@ tm_rust_file_list=@tm_rust_file_list@
 tm_rust_include_list=@tm_rust_include_list@
 tm_jit_file_list=@tm_jit_file_list@
 tm_jit_include_list=@tm_jit_include_list@
+tm_algol68_file_list=@tm_algol68_file_list@
+tm_algol68_include_list=@tm_algol68_include_list@
 build_xm_file_list=@build_xm_file_list@
 build_xm_include_list=@build_xm_include_list@
 build_xm_defines=@build_xm_defines@
@@ -920,6 +922,7 @@ TM_P_H    = tm_p.h    $(tm_p_file_list) $(TREE_H)
 TM_D_H    = tm_d.h    $(tm_d_file_list)
 TM_RUST_H = tm_rust.h $(tm_rust_file_list)
 TM_JIT_H  = tm_jit.h    $(tm_jit_file_list)
+TM_ALGOL68_H = tm_algol68.h $(tm_algol68_file_list)
 GTM_H     = tm.h      $(tm_file_list) insn-constants.h
 TM_H      = $(GTM_H) insn-flags.h $(OPTIONS_H)
 
@@ -981,12 +984,14 @@ COMMON_TARGET_DEF = common/common-target.def target-hooks-macros.h
 D_TARGET_DEF = d/d-target.def target-hooks-macros.h
 RUST_TARGET_DEF = rust/rust-target.def target-hooks-macros.h
 JIT_TARGET_DEF = jit/jit-target.def target-hooks-macros.h
+ALGOL68_TARGET_DEF = algol68/algol68-target.def target-hooks-macros.h
 TARGET_H = $(TM_H) target.h $(TARGET_DEF) insn-modes.h insn-codes.h
 C_TARGET_H = c-family/c-target.h $(C_TARGET_DEF)
 COMMON_TARGET_H = common/common-target.h $(INPUT_H) $(COMMON_TARGET_DEF)
 D_TARGET_H = d/d-target.h $(D_TARGET_DEF)
 RUST_TARGET_H = rust/rust-target.h $(RUST_TARGET_DEF)
 JIT_TARGET_H = jit/jit-target.h $(JIT_TARGET_DEF)
+ALGOL68_TARGET_H = algol68/algol68-target.h $(ALGOL68_TARGET_DEF)
 MACHMODE_H = machmode.h mode-classes.def
 HOOKS_H = hooks.h
 HOSTHOOKS_DEF_H = hosthooks-def.h $(HOOKS_H)
@@ -1310,6 +1315,9 @@ FORTRAN_TARGET_OBJS=@fortran_target_objs@
 
 # Target specific, Rust specific object file
 RUST_TARGET_OBJS=@rust_target_objs@
+
+# Target specific, Algol68 specific object file
+ALGOL68_TARGET_OBJS=@algol68_target_objs@
 
 # Object files for gcc many-languages driver.
 GCC_OBJS = gcc.o gcc-main.o ggc-none.o gcc-urlifier.o options-urls.o
@@ -2117,6 +2125,7 @@ tm_p.h: cs-tm_p.h ; @true
 tm_d.h: cs-tm_d.h ; @true
 tm_rust.h: cs-tm_rust.h ; @true
 tm_jit.h: cs-tm_jit.h ; @true
+tm_algol68.h: cs-tm_algol68.h; @true
 
 cs-config.h: Makefile
 	TARGET_CPU_DEFAULT="" \
@@ -2160,6 +2169,11 @@ cs-tm_jit.h: Makefile
 	TARGET_CPU_DEFAULT="" \
 	HEADERS="$(tm_jit_include_list)" DEFINES="" \
 	$(SHELL) $(srcdir)/mkconfig.sh tm_jit.h
+
+cs-tm_algol68.h: Makefile
+	TARGET_CPU_DEFAULT="" \
+	HEADERS="$(tm_algol68_include_list)" DEFINES="" \
+	$(SHELL) $(srcdir)/mkconfig.sh tm_algol68.h
 
 # Don't automatically run autoconf, since configure.ac might be accidentally
 # newer than configure.  Also, this writes into the source directory which
@@ -2640,6 +2654,12 @@ default-rust.o: config/default-rust.cc
 	$(COMPILE) $<
 	$(POSTCOMPILE)
 
+# Files used by the Algol68 language front end.
+
+default-algol68.o: config/default-algol68.cc
+	$(COMPILE) $<
+	$(POSTCOMPILE)
+
 # Language-independent files.
 
 DRIVER_DEFINES = \
@@ -2995,6 +3015,15 @@ s-jit-target-hooks-def-h: build/genhooks$(build_exeext)
 					     jit/jit-target-hooks-def.h
 	$(STAMP) s-jit-target-hooks-def-h
 
+algol68/algol68-target-hooks-def.h: s-algol68-target-hooks-def-h; @true
+
+s-algol68-target-hooks-def-h: build/genhooks$(build_exeext)
+	$(RUN_GEN) build/genhooks$(build_exeext) "Algol68 Target Hook" \
+					     > tmp-algol68-target-hooks-def.h
+	$(SHELL) $(srcdir)/../move-if-change tmp-algol68-target-hooks-def.h \
+					     algol68/algol68-target-hooks-def.h
+	$(STAMP) s-algol68-target-hooks-def-h
+
 # check if someone mistakenly only changed tm.texi.
 # We use a different pathname here to avoid a circular dependency.
 s-tm-texi: $(srcdir)/doc/../doc/tm.texi
@@ -3020,6 +3049,7 @@ s-tm-texi: build/genhooks$(build_exeext) $(srcdir)/doc/tm.texi.in
 	    || test $(srcdir)/doc/tm.texi -nt $(srcdir)/common/common-target.def \
 	    || test $(srcdir)/doc/tm.texi -nt $(srcdir)/d/d-target.def \
 	    || test $(srcdir)/doc/tm.texi -nt $(srcdir)/rust/rust-target.def \
+	    || test $(srcdir)/doc/tm.texi -nt $(srcdir)/algol68/algol68-target.def \
 	  ); then \
 	  echo >&2 ; \
 	  echo You should edit $(srcdir)/doc/tm.texi.in rather than $(srcdir)/doc/tm.texi . >&2 ; \
@@ -3203,6 +3233,7 @@ generated_files = config.h tm.h $(TM_P_H) $(TM_D_H) $(TM_JIT_H) $(TM_H) \
        gimple-match-auto.h generic-match-auto.h \
        c-family/c-target-hooks-def.h d/d-target-hooks-def.h \
        $(TM_RUST_H) rust/rust-target-hooks-def.h \
+       $(TM_ALGOL68_H) algol68/algol68-target-hooks-def.h \
        case-cfn-macros.h \
        jit/jit-target-hooks-def.h case-cfn-macros.h \
        cfn-operators.pd omp-device-properties.h
@@ -3339,7 +3370,7 @@ build/genrecog.o : genrecog.cc $(RTL_BASE_H) $(BCONFIG_H) $(SYSTEM_H)	\
   $(HASH_TABLE_H) inchash.h
 build/genhooks.o : genhooks.cc $(TARGET_DEF) $(C_TARGET_DEF)		\
   $(COMMON_TARGET_DEF) $(D_TARGET_DEF) $(RUST_TARGET_DEF) $(JIT_TARGET_DEF) \
-  $(BCONFIG_H) $(SYSTEM_H) errors.h
+  $(ALGOL68_TARGET_DEF) $(BCONFIG_H) $(SYSTEM_H) errors.h
 build/genmddump.o : genmddump.cc $(RTL_BASE_H) $(BCONFIG_H) $(SYSTEM_H)	\
   $(CORETYPES_H) $(GTM_H) errors.h $(READ_MD_H) $(GENSUPPORT_H)
 build/genmatch.o : genmatch.cc $(BCONFIG_H) $(SYSTEM_H) $(CORETYPES_H) \
@@ -3891,7 +3922,8 @@ $(build_htmldir)/gccinstall/index.html: $(TEXI_GCCINSTALL_FILES)
 .PHONY: regenerate-opt-urls
 OPT_URLS_HTML_DEPS = $(build_htmldir)/gcc/Option-Index.html \
 	$(build_htmldir)/gdc/Option-Index.html \
-	$(build_htmldir)/gfortran/Option-Index.html
+	$(build_htmldir)/gfortran/Option-Index.html \
+	$(build_htmldir)/ga68/Option-Index.html
 $(OPT_URLS_HTML_DEPS): %/Option-Index.html: %/index.html
 
 regenerate-opt-urls: $(srcdir)/regenerate-opt-urls.py $(OPT_URLS_HTML_DEPS)

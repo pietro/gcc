@@ -1,0 +1,141 @@
+# { dg-options "-fstropping=upper" }  #
+# Dyadic operators, non-bold nomads # 
+BEGIN INT decls := 0;
+
+      OP    <= (INT a, b) INT: a + b; decls +:= 1;
+      OP   <<= (INT a, b) INT: a + b; decls +:= 1;
+      OP   <>= (INT a, b) INT: a + b; decls +:= 1;
+      OP   </= (INT a, b) INT: a + b; decls +:= 1;
+      OP   <== (INT a, b) INT: a + b; decls +:= 1;
+      OP   <*= (INT a, b) INT: a + b; decls +:= 1;
+      OP  <:== (INT a, b) INT: a + b; decls +:= 1;
+      OP <<:== (INT a, b) INT: a + b; decls +:= 1;
+      OP <>:== (INT a, b) INT: a + b; decls +:= 1;
+      OP </:== (INT a, b) INT: a + b; decls +:= 1;
+      OP <=:== (INT a, b) INT: a + b; decls +:= 1;
+      OP <*:== (INT a, b) INT: a + b; decls +:= 1;
+      OP  <=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP <<=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP <>=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP </=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP <==:= (INT a, b) INT: a + b; decls +:= 1;
+      OP <*=:= (INT a, b) INT: a + b; decls +:= 1;
+
+      OP    >= (INT a, b) INT: a + b; decls +:= 1;
+      OP   ><= (INT a, b) INT: a + b; decls +:= 1;
+      OP   >>= (INT a, b) INT: a + b; decls +:= 1;
+      OP   >/= (INT a, b) INT: a + b; decls +:= 1;
+      OP   >== (INT a, b) INT: a + b; decls +:= 1;
+      OP   >*= (INT a, b) INT: a + b; decls +:= 1;
+      OP  >:== (INT a, b) INT: a + b; decls +:= 1;
+      OP ><:== (INT a, b) INT: a + b; decls +:= 1;
+      OP >>:== (INT a, b) INT: a + b; decls +:= 1;
+      OP >/:== (INT a, b) INT: a + b; decls +:= 1;
+      OP >=:== (INT a, b) INT: a + b; decls +:= 1;
+      OP >*:== (INT a, b) INT: a + b; decls +:= 1;
+      OP  >=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP ><=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP >>=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP >/=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP >==:= (INT a, b) INT: a + b; decls +:= 1;
+      OP >*=:= (INT a, b) INT: a + b; decls +:= 1;
+
+      OP    /= (INT a, b) INT: a + b; decls +:= 1;
+      OP   /<= (INT a, b) INT: a + b; decls +:= 1;
+      OP   />= (INT a, b) INT: a + b; decls +:= 1;
+      OP   //= (INT a, b) INT: a + b; decls +:= 1;
+      OP   /== (INT a, b) INT: a + b; decls +:= 1;
+      OP   /*= (INT a, b) INT: a + b; decls +:= 1;
+      OP  /:== (INT a, b) INT: a + b; decls +:= 1;
+      OP /<:== (INT a, b) INT: a + b; decls +:= 1;
+      OP />:== (INT a, b) INT: a + b; decls +:= 1;
+      OP //:== (INT a, b) INT: a + b; decls +:= 1;
+      OP /=:== (INT a, b) INT: a + b; decls +:= 1;
+      OP /*:== (INT a, b) INT: a + b; decls +:= 1;
+      OP  /=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP /<=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP />=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP //=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP /==:= (INT a, b) INT: a + b; decls +:= 1;
+      OP /*=:= (INT a, b) INT: a + b; decls +:= 1;
+
+      OP    == (INT a, b) INT: a + b; decls +:= 1;
+      OP   =<= (INT a, b) INT: a + b; decls +:= 1;
+      OP   =>= (INT a, b) INT: a + b; decls +:= 1;
+      OP   =/= (INT a, b) INT: a + b; decls +:= 1;
+      OP   === (INT a, b) INT: a + b; decls +:= 1;
+      OP   =*= (INT a, b) INT: a + b; decls +:= 1;
+      OP  =:== (INT a, b) INT: a + b; decls +:= 1;
+      OP =<:== (INT a, b) INT: a + b; decls +:= 1;
+      OP =>:== (INT a, b) INT: a + b; decls +:= 1;
+      OP =/:== (INT a, b) INT: a + b; decls +:= 1;
+      OP ==:== (INT a, b) INT: a + b; decls +:= 1;
+      OP =*:== (INT a, b) INT: a + b; decls +:= 1;
+      OP  ==:= (INT a, b) INT: a + b; decls +:= 1;
+      OP =<=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP =>=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP =/=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP ===:= (INT a, b) INT: a + b; decls +:= 1;
+      OP =*=:= (INT a, b) INT: a + b; decls +:= 1;
+
+      OP    *= (INT a, b) INT: a + b; decls +:= 1;
+      OP   *<= (INT a, b) INT: a + b; decls +:= 1;
+      OP   *>= (INT a, b) INT: a + b; decls +:= 1;
+      OP   */= (INT a, b) INT: a + b; decls +:= 1;
+      OP   *== (INT a, b) INT: a + b; decls +:= 1;
+      OP   **= (INT a, b) INT: a + b; decls +:= 1;
+      OP  *:== (INT a, b) INT: a + b; decls +:= 1;
+      OP *<:== (INT a, b) INT: a + b; decls +:= 1;
+      OP *>:== (INT a, b) INT: a + b; decls +:= 1;
+      OP */:== (INT a, b) INT: a + b; decls +:= 1;
+      OP *=:== (INT a, b) INT: a + b; decls +:= 1;
+      OP **:== (INT a, b) INT: a + b; decls +:= 1;
+      OP  *=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP *<=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP *>=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP */=:= (INT a, b) INT: a + b; decls +:= 1;
+      OP *==:= (INT a, b) INT: a + b; decls +:= 1;
+      OP **=:= (INT a, b) INT: a + b; decls +:= 1;
+
+      PRIO
+      <=1, <<=1, <>=1, </=1, <==1, <*=1,
+      <:==1, <<:==1, <>:==1, </:==1, <=:==1, <*:==1,
+      <=:=1, <<=:=1, <>=:=1, </=:=1, <==:=1, <*=:=1,
+
+      >=1, ><=1, >>=1, >/=1, >==1, >*=1,
+      >:==1, ><:==1, >>:==1, >/:==1, >=:==1, >*:==1,
+      >=:=1, ><=:=1, >>=:=1, >/=:=1, >==:=1, >*=:=1,
+
+      /=1, /<=1, />=1, //=1, /==1, /*=1,
+      /:==1, /<:==1, />:==1, //:==1, /=:==1, /*:==1,
+      /=:=1, /<=:=1, />=:=1, //=:=1, /==:=1, /*=:=1,
+
+      ==1, =<=1, =>=1, =/=1, ===1, =*=1,
+      =:==1, =<:==1, =>:==1, =/:==1, ==:==1, =*:==1,
+      ==:=1, =<=:=1, =>=:=1, =/=:=1, ===:=1, =*=:=1,
+
+      *=1, *<=1, *>=1, */=1, *==1, **=1,
+      *:==1, *<:==1, *>:==1, */:==1, *=:==1, **:==1,
+      *=:=1, *<=:=1, *>=:=1, */=:=1, *==:=1, **=:=1;
+
+    ASSERT ((0
+    < 1  << 1  <> 1  </ 1  <= 1  <* 1
+    <:= 1  <<:= 1  <>:= 1  </:= 1  <=:= 1  <*:= 1
+    <=: 1  <<=: 1  <>=: 1  </=: 1  <==: 1  <*=: 1
+
+    > 1  >< 1  >> 1  >/ 1  >= 1  >* 1
+    >:= 1  ><:= 1  >>:= 1  >/:= 1  >=:= 1  >*:= 1
+    >=: 1  ><=: 1  >>=: 1  >/=: 1  >==: 1  >*=: 1
+
+    / 1  /< 1  /> 1  // 1  /= 1  /* 1
+    /:= 1  /<:= 1  />:= 1  //:= 1  /=:= 1  /*:= 1
+    /=: 1  /<=: 1  />=: 1  //=: 1  /==: 1  /*=: 1
+
+    = 1  =< 1  => 1  =/ 1  == 1  =* 1
+    =:= 1  =<:= 1  =>:= 1  =/:= 1  ==:= 1  =*:= 1
+    ==: 1  =<=: 1  =>=: 1  =/=: 1  ===: 1  =*=: 1
+
+    * 1  *< 1  *> 1  */ 1  *= 1  ** 1
+    *:= 1  *<:= 1  *>:= 1  */:= 1  *=:= 1  **:= 1
+    *=: 1  *<=: 1  *>=: 1  */=: 1  *==: 1  **=: 1) EQ decls)
+END

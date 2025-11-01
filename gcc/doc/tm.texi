@@ -57,6 +57,7 @@ through the macros defined in the @file{.h} file.
 * D Language and ABI::  Controlling D ABI changes.
 * Rust Language and ABI:: Controlling Rust ABI changes.
 * JIT Language and ABI:: JIT ABI parameters
+* ALGOL 68 Language and ABI:: Controlling ALGOL 68 ABI changes.
 * Named Address Spaces:: Adding support for named address spaces
 * Misc::                Everything else.
 @end menu
@@ -11414,6 +11415,23 @@ Register all target information keys relating to the target CPU using the
 function @code{jit_add_target_info}, which takes a key and a value.  The
 keys added by this hook are made available at compile time by calling
 get_target_info.
+@end deftypefn
+
+@node ALGOL 68 Language and ABI
+@section ALGOL 68 ABI parameters
+@cindex parameters, ALGOL 68 abi
+
+@deftypefn {Algol68 Target Hook} void TARGET_ALGOL68_CPU_INFO (void)
+Declare all environmental CPU info and features relating to the target CPU
+using the function @code{algol68_add_target_info}, which takes a string
+representing the feature key and a string representing the feature value.
+Configuration pairs predefined by this hook apply to all files that are being
+compiled.
+@end deftypefn
+
+@deftypefn {Algol68 Target Hook} void TARGET_ALGOL68_OS_INFO (void)
+Similar to @code{TARGET_ALGOL68_CPU_INFO}, but is used for configuration info
+relating to the target operating system.
 @end deftypefn
 
 @node Named Address Spaces

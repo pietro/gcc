@@ -1,0 +1,23 @@
+# { dg-options "-fstropping=upper" }  #
+BEGIN STRING int = "INT", real = "REAL", rreal = "[]REAL";
+
+      OP AA = (UNION(INT,REAL,[]REAL) p) UNION(REAL,[]REAL):
+         CASE p
+         IN (INT i): AA REAL (i),
+            (REAL r): AA []REAL (r)
+         OUSE p
+         IN ([]REAL rr): CASE ROUND rr[1] IN 3.0, rr OUT 4.0 ESAC
+         OUT error
+         ESAC;
+
+      FOR i TO 3
+      DO AA AA CASE i
+               IN UNION(REAL,INT)(1),
+                  UNION(INT,[]REAL)([]REAL(2)),
+                  AA 3
+               ESAC
+      OD;
+      0 EXIT
+error:
+     puts ("Error in united-case clause");
+END

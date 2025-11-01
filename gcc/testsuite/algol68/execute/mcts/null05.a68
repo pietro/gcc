@@ -1,0 +1,2 @@
+# { dg-options "-fstropping=upper" }  #
+(PAR (SKIP,SKIP))

@@ -1,0 +1,9 @@
+# { dg-options "-fstropping=upper" }  #
+# Simple jumps and EXITs.  #
+BEGIN INT control := 0;
+      FOR i TO 2
+      DO IF i = 2 THEN GOTO l FI; control +:= 10 EXIT
+      l: control +:= 3
+      OD;
+      ASSERT (control = 13)
+END

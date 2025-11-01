@@ -1,0 +1,10 @@
+# { dg-options "-fstropping=upper" }  #
+BEGIN MODE S = FLEX[1:0]CHAR, T = [1:0]CHAR;
+      REF STRING n = LOC STRING := "Next line will be empty, then a";
+      UNION (REF S, REF T) f = LOC T := "";
+      UNION (STRING, CHAR) u = UNION (S,CHAR) ("a");
+
+      puts (n);
+      puts ((f | (REF S s): s, (REF T t): t));
+      puts ((u | (STRING s): s, (CHAR c): c))
+END
