@@ -147,7 +147,7 @@ along with GCC; see the file COPYING3.  If not see
 /* Assembler pseudos to introduce constants of various size.  */
 
 #define ASM_BYTE "\t.byte\t"
-#define ASM_SHORT "\t.word\t"
+#define ASM_SHORT "\t.short\t"
 #define ASM_LONG "\t.long\t"
 #define ASM_QUAD "\t.quad\t"
 
@@ -185,6 +185,32 @@ along with GCC; see the file COPYING3.  If not see
 	  goto DONE;							\
 	}								\
     }
+
+/* macOS ABI uses __TEXT,__const for jump tables on Arm64.  */
+#undef JUMP_TABLES_IN_TEXT_SECTION
+#define JUMP_TABLES_IN_TEXT_SECTION 0
+
+#define ASM_OUTPUT_ADDR_DIFF_ELT(STREAM, BODY, VALUE, REL)		\
+  do {									\
+    switch (GET_MODE (BODY))						\
+      {									\
+      case E_QImode:							\
+	asm_fprintf (STREAM, "\t.byte\t(%LL%d-%LLrtx%d)/4\n",		\
+		     VALUE, REL);					\
+	break;								\
+      case E_HImode:							\
+	asm_fprintf (STREAM, "\t.short\t(%LL%d-%LLrtx%d)/4\n",		\
+		     VALUE, REL);					\
+	break;								\
+      case E_SImode:							\
+      case E_DImode: /* See comment in aarch64_output_casesi.  */	\
+	asm_fprintf (STREAM, "\t.long\t (%LL%d-%LLrtx%d)/4\n",		\
+		     VALUE, REL);					\
+	break;								\
+      default:								\
+	gcc_unreachable ();						\
+      }									\
+  } while (0)
 
 #undef ASM_DECLARE_FUNCTION_NAME
 #define ASM_DECLARE_FUNCTION_NAME(STR, NAME, DECL)	\
